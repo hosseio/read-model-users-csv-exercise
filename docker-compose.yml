@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  php-fpm:
+    build:
+      context: ./php-fpm
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_SECRET=${APP_SECRET}
+      - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}?serverVersion=5.7
+    volumes:
+      - ./app:/var/www
+    networks:
+      - app-network
+
+  nginx:
+    build:
+      context: ./nginx
+    volumes:
+      - ./app:/var/www
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites/:/etc/nginx/sites-available
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+      - ./logs:/var/log
+    depends_on:
+      - php-fpm
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - application
+      - app-network
+
+networks:
+  app-network:
+  application:
