@@ -1,7 +1,7 @@
 ## Exercise
 
 #### Statement
-Read statement.pdf
+Read [statement.pdf](https://github.com/hosseio/read-model-users-csv-exercise/blob/master/statement.pdf)
 
 #### Prerequisites
 * [Docker](https://www.docker.com/)
